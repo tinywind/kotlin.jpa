@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>kr.linkbiz.guidemon</groupId>
+    <artifactId>linkbiz-guidemon</artifactId>
+    <packaging>war</packaging>
+    <version>1.0</version>
+    <name>kotlin.jpa.test</name>
+
+
+    <properties>
+        <postgresql.version>9.4-1200-jdbc41</postgresql.version>
+        <jooq.version>3.5.1</jooq.version>
+        <jdbc.url>postgresql://localhost/jpa</jdbc.url>
+        <jdbc.user>postgres</jdbc.user>
+        <jdbc.password>1234</jdbc.password>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>4.3.10.Final</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${postgresql.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq</artifactId>
+            <version>${jooq.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>kotlin.jpa.test</finalName>
+
+        <resources>
+            <resource>
+                <filtering>true</filtering>
+                <directory>resources</directory>
+                <excludes>
+                    <exclude>**/messages*.properties</exclude>
+                </excludes>
+            </resource>
+            <resource>
+                <filtering>false</filtering>
+                <directory>resources</directory>
+                <includes>
+                    <include>**/messages*.properties</include>
+                </includes>
+            </resource>
+        </resources>
+
+        <plugins>
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>3.0</version>
+                <configuration>
+                    <url>jdbc:${jdbc.url}</url>
+                    <user>${jdbc.user}</user>
+                    <password>${jdbc.password}</password>
+                    <locations>
+                        <location>filesystem:resources/db.migration</location>
+                    </locations>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.postgresql</groupId>
+                        <artifactId>postgresql</artifactId>
+                        <version>${postgresql.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+        </plugins>
+    </build>
+</project>

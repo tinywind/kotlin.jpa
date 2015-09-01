@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="kotlin-practice:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="kotlin.jpa.test.war">
+      <element id="artifact" artifact-name="kotlin-practice:war exploded" />
+    </root>
+  </artifact>
+</component>
