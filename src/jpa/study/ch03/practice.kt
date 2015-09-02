@@ -28,7 +28,6 @@ fun test() {
         tx.begin()
 
         var mergeMember = em.merge(member)
-        tx.commit()
 
         println("$member")
         println("$mergeMember")
@@ -36,11 +35,12 @@ fun test() {
         println("em contains mergeMember? ${em.contains(mergeMember)}")
 
         em.remove(mergeMember)
+        tx.commit()
         em.close()
     }
 
     var m = try {
-        createMember(3L, "username3")
+        createMember(5L, "username5")
     } catch(e: Exception) {
         e.printStackTrace()
         null

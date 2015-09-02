@@ -8,12 +8,18 @@
             <property name="javax.persistence.jdbc.password" value="1234"/>
             <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost/jpa"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL9Dialect"/>
+            <!--[create|drop-and-create|drop|none]-->
+            <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
 
             <!-- optional -->
-            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.show_sql" value="false"/>
             <property name="hibernate.format_sql" value="true"/>
             <property name="hibernate.user_sql_comments" value="true"/>
             <property name="hibernate.id.new_generator_mappings" value="true"/>
+            <!--[create|create-drop|update|validate|none]-->
+            <!-- this option is 'javax.persistence.schema-generation.database.action''s function implement -->
+            <!--<property name="hibernate.hdm2ddl.auto" value="create-drop"/>-->
+            <property name="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.ImprovedNamingStrategy"/>
         </properties>
     </persistence-unit>
 

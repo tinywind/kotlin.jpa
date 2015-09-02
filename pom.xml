@@ -68,7 +68,8 @@
                     <user>${jdbc.user}</user>
                     <password>${jdbc.password}</password>
                     <locations>
-                        <location>${project.basedir}/resources/db.migration</location>
+                        <!--<location>${project.basedir}/resources/db.migration</location>-->
+                        <location>filesystem:resources/db.migration</location>
                     </locations>
                 </configuration>
                 <dependencies>

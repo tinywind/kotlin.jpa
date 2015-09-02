@@ -1527,13 +1527,7 @@
       <column name="viewowner" sqlType="name" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
       <column name="definition" sqlType="text" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
     </table>
-    <table name="member" schema="public" catalog="jpa" type="TABLE">
-      <column name="id" sqlType="bigserial" precision="19" scale="0" nullable="false" jdbcType="-5" def="bmV4dHZhbCgnbWVtYmVyX2lkX3NlcSc6OnJlZ2NsYXNzKQ==" autoIncrement="true"/>
-      <column name="username" sqlType="varchar" precision="256" scale="0" nullable="false" jdbcType="12"/>
-      <column name="age" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
-      <primary-key name="member_pkey" columns="id"/>
-    </table>
-    <table name="member_id_seq" schema="public" catalog="jpa" type="SEQUENCE">
+    <table name="hibernate_sequence" schema="public" catalog="jpa" type="SEQUENCE">
       <column name="sequence_name" sqlType="name" precision="2147483647" scale="0" nullable="false" jdbcType="12"/>
       <column name="last_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
       <column name="start_value" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
@@ -1544,6 +1538,82 @@
       <column name="log_cnt" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
       <column name="is_cycled" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
       <column name="is_called" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+    </table>
+    <table name="hibernate_sequences" schema="public" catalog="jpa" type="TABLE">
+      <column name="sequence_name" sqlType="varchar" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="next_val" sqlType="int8" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <primary-key name="hibernate_sequences_pkey" columns="sequence_name"/>
+    </table>
+    <table name="item" schema="public" catalog="jpa" type="TABLE">
+      <column name="item_id" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="name" sqlType="varchar" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="price" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="stock_quantity" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="item_pkey" columns="item_id"/>
+      <exported-key name="fk_flndste1vbvdfb200b4ikibis" table="order_item" schema="public" catalog="jpa" columns="item_id"/>
+    </table>
+    <table name="member" schema="public" catalog="jpa" type="TABLE">
+      <column name="member_id" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="city" sqlType="varchar" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="name" sqlType="varchar" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="street" sqlType="varchar" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="zipcode" sqlType="varchar" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="member_pkey" columns="member_id"/>
+      <exported-key name="fk_hk1trr9mwboq35fssa59rnodg" table="orders" schema="public" catalog="jpa" columns="member_id"/>
+    </table>
+    <table name="member_requests" schema="public" catalog="jpa" type="TABLE">
+      <column name="member" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="requests" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <index name="uk_j6fqoub4vhqsqdbgmhe22hbad" unique="true" columns="requests"/>
+    </table>
+    <table name="order2" schema="public" catalog="jpa" type="TABLE">
+      <column name="id" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="created_at" sqlType="timestamp" precision="29" scale="6" nullable="true" jdbcType="93"/>
+      <column name="member_id" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <primary-key name="order2_pkey" columns="id"/>
+    </table>
+    <table name="order_item" schema="public" catalog="jpa" type="TABLE">
+      <column name="order_item_id" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="count" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="order_price" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="item_id" sqlType="int8" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="order_id" sqlType="int8" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <primary-key name="order_item_pkey" columns="order_item_id"/>
+      <foreign-key name="fk_flndste1vbvdfb200b4ikibis" columns="item_id" ref-table="item" ref-schema="public" ref-catalog="" ref-columns="item_id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="fk_5gjhq2fmknk50h8859nf0bcmx" columns="order_id" ref-table="orders" ref-schema="public" ref-catalog="" ref-columns="order_id" update-rule="3" delete-rule="3" deferrability="2"/>
+    </table>
+    <table name="orders" schema="public" catalog="jpa" type="TABLE">
+      <column name="order_id" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="order_date" sqlType="timestamp" precision="29" scale="6" nullable="true" jdbcType="93"/>
+      <column name="status" sqlType="varchar" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="member_id" sqlType="int8" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <primary-key name="orders_pkey" columns="order_id"/>
+      <foreign-key name="fk_hk1trr9mwboq35fssa59rnodg" columns="member_id" ref-table="member" ref-schema="public" ref-catalog="" ref-columns="member_id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="fk_5gjhq2fmknk50h8859nf0bcmx" table="order_item" schema="public" catalog="jpa" columns="order_id"/>
+    </table>
+    <table name="orderxproduct" schema="public" catalog="jpa" type="TABLE">
+      <column name="id" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="order_id" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="product_id" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <primary-key name="orderxproduct_pkey" columns="id"/>
+    </table>
+    <table name="product" schema="public" catalog="jpa" type="TABLE">
+      <column name="id" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="price" sqlType="float8" precision="17" scale="17" nullable="false" jdbcType="8"/>
+      <column name="title" sqlType="varchar" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="product_pkey" columns="id"/>
+    </table>
+    <table name="request" schema="public" catalog="jpa" type="TABLE">
+      <column name="id" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="created_at" sqlType="timestamp" precision="29" scale="6" nullable="true" jdbcType="93"/>
+      <column name="member_id" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <primary-key name="request_pkey" columns="id"/>
+    </table>
+    <table name="requestxproduct" schema="public" catalog="jpa" type="TABLE">
+      <column name="id" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="product_id" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="request_id" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <primary-key name="requestxproduct_pkey" columns="id"/>
     </table>
     <table name="schema_version" schema="public" catalog="jpa" type="TABLE">
       <column name="version_rank" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
@@ -1561,6 +1631,30 @@
       <index name="schema_version_ir_idx" unique="false" columns="installed_rank"/>
       <index name="schema_version_s_idx" unique="false" columns="success"/>
       <index name="schema_version_vr_idx" unique="false" columns="version_rank"/>
+    </table>
+    <table name="team" schema="public" catalog="jpa" type="TABLE">
+      <column name="id" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="name" sqlType="varchar" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="team_pkey" columns="id"/>
+    </table>
+    <table name="team_members" schema="public" catalog="jpa" type="TABLE">
+      <column name="team" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="members" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <index name="uk_6nmjtc2ia6x0me5lmm0ppk38k" unique="true" columns="members"/>
+    </table>
+    <table name="test" schema="public" catalog="jpa" type="TABLE">
+      <column name="id" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <primary-key name="test_pkey" columns="id"/>
+    </table>
+    <table name="test_members" schema="public" catalog="jpa" type="TABLE">
+      <column name="test" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="members" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <index name="uk_62bpn40qwdj9mpn57a7bdqyvi" unique="true" columns="members"/>
+    </table>
+    <table name="test_products" schema="public" catalog="jpa" type="TABLE">
+      <column name="test" sqlType="varchar" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="products" sqlType="int8" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <index name="uk_fwsapv2j6kpcaox5rl2b0yvdu" unique="true" columns="products"/>
     </table>
     <procedure name="RI_FKey_cascade_del" schema="pg_catalog" catalog="jpa" type="2" remarks="cmVmZXJlbnRpYWwgaW50ZWdyaXR5IE9OIERFTEVURSBDQVNDQURF">
       <prototype>
