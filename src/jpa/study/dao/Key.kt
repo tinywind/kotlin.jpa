@@ -1,14 +1,13 @@
 package jpa.study.dao
 
-import java.util.ArrayList
 import javax.persistence.*
 
 Entity
-public class Team {
+public class Key {
     Id GeneratedValue var id: Long? = null
-    Column(nullable = false) var name: String? = null
+    var name: String? = null
 
-    OneToMany(mappedBy = "team", targetEntity = Member::class) var members: MutableList<Member> = ArrayList()
+    OneToOne JoinColumn(name = "locker_id") var locker: Locker? = null
 
     override fun toString(): String {
         return """[${this.javaClass.getName()}]

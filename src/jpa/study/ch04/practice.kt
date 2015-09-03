@@ -1,9 +1,9 @@
 package  jpa.study.ch04
 
 import jpa.study.dao.Member
+import jpa.study.dao.Product
 import jpa.study.dao.Request
 import jpa.study.dao.RequestXProduct
-import jpa.study.dao.Product
 import java.util.Date
 import javax.persistence.Persistence
 
@@ -66,6 +66,7 @@ fun test() {
 
     emf.close()
 }
+
 
 fun mission() {
     var emf = Persistence.createEntityManagerFactory("jpabook")

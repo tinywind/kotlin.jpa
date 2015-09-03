@@ -1,18 +1,40 @@
 package jpa.study.dao
 
-import javax.persistence.*
+import java.util.Date
+import javax.persistence.Entity
+import javax.persistence.Id
+import javax.persistence.JoinColumn
+import javax.persistence.ManyToOne
+
+/*
+* complex foreign key class
+*   - foreign keys are not primary key, and not belong primary key
+* */
 
 Entity
-SequenceGenerator(name = "request_x_product_id_seq_generator")
-class RequestXProduct {
-    Id GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "request_x_product_id_seq_generator") var id: Long? = null
-    Column(nullable = false) var requestId: Long? = null
-    Column(nullable = false) var productId: Long? = null
+public class RequestXProduct {
+    Id var id: Long? = null
+    var orderedAt: Date? = null
+
+    ManyToOne JoinColumn private var request: Request? = null
+
+    public fun setRequest(request: Request) {
+        this.request?.requestXProducts?.remove(this)
+        this.request = request
+        if (!request.requestXProducts.contains(this)) request.requestXProducts.add(this)
+    }
 
     override fun toString(): String {
         return """[${this.javaClass.getName()}]
-         id:$id
-         requestId:$requestId
-         productId:$productId"""
+        request:$request
+        orderedAt:$orderedAt"""
+    }
+
+    override fun equals(other: Any?): Boolean {
+        return super.equals(other)
+    }
+
+    override fun hashCode(): Int {
+        return super.hashCode()
     }
 }
