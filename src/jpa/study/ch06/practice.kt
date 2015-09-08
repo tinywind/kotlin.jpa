@@ -19,7 +19,6 @@ fun createCondition(em: EntityManager) {
     var role1 = Role()
     var role2 = Role()
 
-
     product1.title = "good good"
     product1.price = 3000.toDouble()
     product2.title = "bad bad"
@@ -27,17 +26,17 @@ fun createCondition(em: EntityManager) {
     team.name = "GoodTeam"
     member1.firstName = "j"
     member1.lastName = "kk"
-    member1.username = member1.getFullName()
+    member1.username = member1.fullName
     member1.type = Member.MemberType.ADMIN
-    member1.setTeam(team)
+    member1.team = team
     member2.username = "aa   aaaa"
-    request.setMember(member1)
+    request.member = member1
     request.createdAt = Date()
-    requestXProduct1.setRequest(request)
+    requestXProduct1.request = request
     requestXProduct1.requestId = 1
     requestXProduct1.productId = 1
-    //    requestXProduct1.product = product1
-    requestXProduct2.setRequest(request)
+    //    requestXProduct1.product = produc
+    requestXProduct2.request = request
     requestXProduct2.requestId = 1
     requestXProduct2.productId = 2
     //    requestXProduct2.product = product2
@@ -73,7 +72,6 @@ fun createCondition(em: EntityManager) {
 fun test() {
     var emf = Persistence.createEntityManagerFactory("jpabook")
     var em = emf.createEntityManager()
-
 
     var tx = em.getTransaction()
     try {

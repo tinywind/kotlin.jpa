@@ -13,7 +13,7 @@ fun test() {
 
         var m = Member()
 
-        m.id = id
+//        m.id = id
         m.username = username
 
         em.persist(m)

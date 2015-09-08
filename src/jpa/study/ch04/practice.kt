@@ -84,7 +84,7 @@ fun mission() {
         var member = Member()
         member.firstName = "j"
         member.lastName = "kk"
-        member.username = member.getFullName()
+        member.username = member.fullName
 
         em.persist(member)
         em.persist(product1)

@@ -6,18 +6,23 @@ import javax.persistence.*
 
 Entity
 public class Request { // order attribute is exist in postgresql db
-    Id GeneratedValue var id: Long? = null
-    var memberId: Long? = null
-    var createdAt: Date? = null
-
-    ManyToOne JoinColumn(/*name = "member_id", referencedColumnName = "id"*/)
-    private var member: Member? = null
-
-    public fun setMember(member: Member) {
-        this.member?.requests?.remove(this)
-        this.member = member
-        if (!member.requests.contains(this)) member.requests.add(this)
-    }
+    Id GeneratedValue public var
+            id: Long? = null
+    public var
+            memberId: Long? = null
+    public var
+            createdAt: Date? = null
+    ManyToOne JoinColumn(/*name = "member_id", referencedColumnName = "id"*/) public var
+            member: Member? = null
+        set(member: Member?) {
+            $member?.requests?.remove(this)
+            $member = member
+            if (member?.requests?.contains(this) !== true)
+                member?.requests?.add(this)
+        }
+        get() {
+            return $member
+        }
 
     OneToMany(mappedBy = "request", targetEntity = RequestXProduct::class) var requestXProducts: MutableList<RequestXProduct> = ArrayList()
 

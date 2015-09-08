@@ -26,7 +26,6 @@
           <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.7" />
           <element id="library" level="project" name="Maven: com.google.guava:guava:18.0" />
           <element id="library" level="project" name="Maven: org.slf4j:slf4j-simple:1.7.7" />
-          <element id="library" level="project" name="Maven: org.jooq:jooq:3.5.1" />
         </element>
       </element>
       <element id="directory" name="META-INF">

@@ -1,14 +1,14 @@
 package  jpa.study.ch02
 
 import jpa.study.dao.Member
+import jpa.study.dao.Role
+import jpa.study.dao.Team
 import javax.persistence.EntityManager
 import javax.persistence.Persistence
 
 fun test() {
     fun logic(em: EntityManager) {
         val member = Member()
-
-        member.id = 1L
         member.username = "username1"
         member.age = 11
 
@@ -20,8 +20,8 @@ fun test() {
 
         var members = em.createQuery("SELECT m FROM Member m", javaClass<Member>()).getResultList()
 
-        em.detach(member)
         em.remove(member)
+        em.detach(member)
     }
 
     var emf = Persistence.createEntityManagerFactory("jpabook")

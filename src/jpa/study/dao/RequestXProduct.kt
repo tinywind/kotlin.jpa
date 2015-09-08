@@ -1,5 +1,6 @@
 package jpa.study.dao
 
+import java.io.Serializable
 import java.util.Date
 import javax.persistence.Entity
 import javax.persistence.Id
@@ -12,20 +13,25 @@ import javax.persistence.ManyToOne
 * */
 
 Entity
-public class RequestXProduct {
-    Id var id: Long? = null
-    var orderedAt: Date? = null
-
-    ManyToOne JoinColumn private var request: Request? = null
-
-    public fun setRequest(request: Request) {
-        this.request?.requestXProducts?.remove(this)
-        this.request = request
-        if (!request.requestXProducts.contains(this)) request.requestXProducts.add(this)
-    }
+public class RequestXProduct : Serializable {
+    Id public var
+            requestId: Long? = null
+    Id public var
+            productId: Long? = null
+    public var
+            orderedAt: Date? = null
+    ManyToOne JoinColumn public var
+            request: Request? = null
+        set(request: Request?) {
+            this.request?.requestXProducts?.remove(this)
+            $request = request
+            if (request?.requestXProducts?.contains(this) !== true) request?.requestXProducts?.add(this)
+        }
 
     override fun toString(): String {
         return """[${this.javaClass.getName()}]
+        requestId:$requestId
+        productId:$productId
         request:$request
         orderedAt:$orderedAt"""
     }

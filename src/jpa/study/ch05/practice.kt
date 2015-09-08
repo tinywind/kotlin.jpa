@@ -24,9 +24,8 @@ fun createCondition(em: EntityManager) {
     var member = Member()
     member.firstName = "j"
     member.lastName = "kk"
-    member.username = member.getFullName()
-    member.setTeam(team)
-    member.setTeam(team)
+    member.username = member.fullName
+    member.team = team
 
     em.persist(member)
 
@@ -34,18 +33,26 @@ fun createCondition(em: EntityManager) {
     print(member.firstName)
 
     var request = Request()
-    request.setMember(member)
+    request.member = member
     request.createdAt = Date()
 
     em.persist(request)
 
     var requestXProduct1 = RequestXProduct()
-    requestXProduct1.setRequest(request)
-//    requestXProduct1.product = product1
+    requestXProduct1.request = request
+    //    requestXProduct1.product = product1
 
     var requestXProduct2 = RequestXProduct()
-    requestXProduct2.setRequest(request)
-//    requestXProduct2.product = product2
+    requestXProduct2.request = request
+    //    requestXProduct2.product = product2
+
+    /* for compatibility after chapter.
+    * *************************************** */
+    requestXProduct1.requestId = request.id
+    requestXProduct2.requestId = request.id
+    requestXProduct1.productId = product1.id
+    requestXProduct2.productId = product2.id
+    /* *************************************  */
 
     em.persist(requestXProduct1)
     em.persist(requestXProduct2)
@@ -62,7 +69,7 @@ fun test() {
         var requestItems: MutableList<RequestXProduct>? = em.createQuery("SELECT m FROM RequestXProduct m", javaClass<RequestXProduct>()).getResultList()
 
         for (item in requestItems?.iterator()) {
-            var request = item.requestId?.let { em.find(javaClass<Request>(), item.requestId)  }
+            var request = item.requestId?.let { em.find(javaClass<Request>(), item.requestId) }
             var product = item.productId?.let { em.find(javaClass<Product>(), item.productId) }
             var member = request?.let { em.find(javaClass<Member>(), request!!.memberId) }
 
