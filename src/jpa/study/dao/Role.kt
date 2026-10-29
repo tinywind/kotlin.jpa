@@ -3,12 +3,12 @@ package jpa.study.dao
 import java.util.ArrayList
 import javax.persistence.*
 
-Entity public class Role {
-    Id GeneratedValue var id: Long? = null
+@Entity public class Role {
+    @Id @GeneratedValue var id: Long? = null
     var name: String? = null
 
-    ManyToMany
-    JoinTable(name = "member_role",
+    @ManyToMany
+    @JoinTable(name = "member_role",
             joinColumns = arrayOf(JoinColumn(name = "member_id")),
             inverseJoinColumns = arrayOf(JoinColumn(name = "role_id")))
     public var members: MutableList<Member> = ArrayList<Member>()

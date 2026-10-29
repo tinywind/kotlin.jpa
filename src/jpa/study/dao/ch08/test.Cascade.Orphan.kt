@@ -7,14 +7,14 @@ import javax.persistence.Entity
 import javax.persistence.ManyToOne
 import javax.persistence.OneToMany
 
-Entity
+@Entity
 public class Parent08Cascade : TypeModel() {
-    public OneToMany(mappedBy = "parent", cascade = arrayOf(CascadeType.PERSIST, CascadeType.REMOVE), orphanRemoval = true) var
+    public @OneToMany(mappedBy = "parent", cascade = arrayOf(CascadeType.PERSIST, CascadeType.REMOVE), orphanRemoval = true) var
             children: MutableList<Child08Cascade> = ArrayList()
 }
 
-Entity
+@Entity
 public class Child08Cascade : TypeModel() {
-    public ManyToOne var
+    public @ManyToOne var
             parent: Parent08Cascade? = null
 }

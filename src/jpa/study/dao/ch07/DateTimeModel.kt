@@ -4,7 +4,7 @@ import java.util.Date
 import javax.persistence.Column
 import javax.persistence.MappedSuperclass
 
-MappedSuperclass
+@MappedSuperclass
 public interface DateTimeModel : BaseModel {
     public var
             createdAt: Date

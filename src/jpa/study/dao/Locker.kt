@@ -5,16 +5,16 @@ import javax.persistence.GeneratedValue
 import javax.persistence.Id
 import javax.persistence.OneToOne
 
-Entity
+@Entity
 public class Locker {
-    Id GeneratedValue var id: Long? = null
+    @Id @GeneratedValue var id: Long? = null
     var name: String? = null
 
     /* relation key is located at primary table */
-    OneToOne(mappedBy = "locker") var member: Member? = null
+    @OneToOne(mappedBy = "locker") var member: Member? = null
 
     /* relation key is located at target table */
-    OneToOne(mappedBy = "locker") var key: Key? = null
+    @OneToOne(mappedBy = "locker") var key: Key? = null
 
     override fun toString(): String {
         return """[${this.javaClass.getName()}]
