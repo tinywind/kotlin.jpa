@@ -66,12 +66,12 @@ fun test() {
     var em = emf.createEntityManager()
 
     fun printFromRequestXProducts() {
-        var requestItems: MutableList<RequestXProduct>? = em.createQuery("SELECT m FROM RequestXProduct m", javaClass<RequestXProduct>()).getResultList()
+        var requestItems: MutableList<RequestXProduct> = em.createQuery("SELECT m FROM RequestXProduct m", RequestXProduct::class.java).getResultList()
 
-        for (item in requestItems?.iterator()) {
-            var request = item.requestId?.let { em.find(javaClass<Request>(), item.requestId) }
-            var product = item.productId?.let { em.find(javaClass<Product>(), item.productId) }
-            var member = request?.let { em.find(javaClass<Member>(), request!!.memberId) }
+        for (item in requestItems) {
+            var request = item.requestId?.let { em.find(Request::class.java, item.requestId) }
+            var product = item.productId?.let { em.find(Product::class.java, item.productId) }
+            var member = request?.let { em.find(Member::class.java, request!!.memberId) }
 
             println(member)
             println(request)
@@ -81,7 +81,7 @@ fun test() {
     }
 
     fun printFromTeam() {
-        var teams = em.createQuery("SELECT m FROM Team m", javaClass<Team>()).getResultList()
+        var teams = em.createQuery("SELECT m FROM Team m", Team::class.java).getResultList()
         for (team in teams) {
             println(team)
             team.members.forEach { member -> println(member) }
@@ -90,7 +90,7 @@ fun test() {
     }
 
     fun printByJqpl() {
-        var members = em.createQuery("SELECT m FROM Member m LEFT OUTER JOIN m.team t WHERE t.name = :teamName", javaClass<Member>())
+        var members = em.createQuery("SELECT m FROM Member m LEFT OUTER JOIN m.team t WHERE t.name = :teamName", Member::class.java)
                 .setParameter("teamName", "GoodTeam")
                 .getResultList()
 
@@ -138,7 +138,7 @@ fun mission() {
     }
 
     fun printFromMember() {
-        var members = em.createQuery("SELECT m FROM Member m LEFT OUTER JOIN m.team t WHERE t.name = :teamName", javaClass<Member>())
+        var members = em.createQuery("SELECT m FROM Member m LEFT OUTER JOIN m.team t WHERE t.name = :teamName", Member::class.java)
                 .setParameter("teamName", "GoodTeam")
                 .getResultList()
 

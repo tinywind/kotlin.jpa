@@ -15,7 +15,7 @@ fun createCondition(em: EntityManager) {
 
 fun explore(em: EntityManager) {
     // proxy object
-    var member = em.getReference(javaClass<Member>(), 1);
+    var member = em.getReference(Member::class.java, 1);
     // no effect
     member.id
     // init proxy object

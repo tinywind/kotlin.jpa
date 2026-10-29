@@ -4,10 +4,10 @@ import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
 
-Entity
+@Entity
 public class Language {
 
-    Id GeneratedValue public var
+    @Id @GeneratedValue public var
             id: Long? = null
 
     public var

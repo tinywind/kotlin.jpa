@@ -14,11 +14,11 @@ fun test() {
 
         em.persist(member)
 
-        var findMember = em.find(javaClass<Member>(), 1L)
+        var findMember = em.find(Member::class.java, 1L)
         println(findMember)
         findMember.age = 20
 
-        var members = em.createQuery("SELECT m FROM Member m", javaClass<Member>()).getResultList()
+        var members = em.createQuery("SELECT m FROM Member m", Member::class.java).getResultList()
 
         em.remove(member)
         em.detach(member)

@@ -90,21 +90,21 @@ fun test() {
 
     fun printFromRequestXProducts() {
         println(" printFromRequestXProducts -----------------------------------------------------------------------")
-        var requestItems = em.createQuery("SELECT m FROM RequestXProduct m", javaClass<RequestXProduct>()).getResultList()
+        var requestItems = em.createQuery("SELECT m FROM RequestXProduct m", RequestXProduct::class.java).getResultList()
         requestItems?.forEach { println(it) }
         println("-----------------------------------------------------------------------")
     }
 
     fun printFromProducts() {
         println(" printFromProducts -----------------------------------------------------------------------")
-        var products = em.createQuery("SELECT m FROM Product m", javaClass<Product>()).getResultList()
+        var products = em.createQuery("SELECT m FROM Product m", Product::class.java).getResultList()
         products?.forEach { println(it) }
         println("-----------------------------------------------------------------------")
     }
 
     fun printOneToOneRelation() {
         println(" printOneToOneRelation -----------------------------------------------------------------------")
-        var lockers = em.createQuery("SELECT m FROM Locker m", javaClass<Locker>()).getResultList()
+        var lockers = em.createQuery("SELECT m FROM Locker m", Locker::class.java).getResultList()
         lockers?.forEach {
             println(it)
             println(it.member)
@@ -114,7 +114,7 @@ fun test() {
 
     fun printManyToManyRelation() {
         println(" printManyToManyRelation -----------------------------------------------------------------------")
-        var roles = em.createQuery("SELECT m FROM Role m", javaClass<Role>()).getResultList()
+        var roles = em.createQuery("SELECT m FROM Role m", Role::class.java).getResultList()
         roles?.forEach {
             println(it)
             it.members.forEach { println(it) }
@@ -124,7 +124,7 @@ fun test() {
 
     fun printManyToManyRelationReverse() {
         println(" printManyToManyRelationReverse -----------------------------------------------------------------------")
-        var members = em.createQuery("SELECT m FROM Member m", javaClass<Member>()).getResultList()
+        var members = em.createQuery("SELECT m FROM Member m", Member::class.java).getResultList()
         members?.forEach {
             println(it)
             it.roles.forEach { println(it) }
@@ -204,8 +204,8 @@ fun test2() {
     em.close()
     em = emf.createEntityManager()
 
-    var countryXLanguages = em.createQuery("SELECT m FROM CountryXLanguage m", javaClass<CountryXLanguage>()).getResultList()
-    var countries = em.createQuery("SELECT m FROM Country m where m.name=:countryName", javaClass<Country>())
+    var countryXLanguages = em.createQuery("SELECT m FROM CountryXLanguage m", CountryXLanguage::class.java).getResultList()
+    var countries = em.createQuery("SELECT m FROM Country m where m.name=:countryName", Country::class.java)
             .setParameter("countryName", "china")
             .getResultList()
 

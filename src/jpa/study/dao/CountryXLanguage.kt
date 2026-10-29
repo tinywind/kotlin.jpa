@@ -8,14 +8,14 @@ import javax.persistence.*
 *   - foreign keys are primary key
 * */
 
-Entity
+@Entity
 //IdClass(CountryXLanguageId::class)
 public class CountryXLanguage : Serializable {
 
-    Id ManyToOne JoinColumn public var
+    @Id @ManyToOne @JoinColumn public var
             country: Country? = null
 
-    Id ManyToOne JoinColumn public var
+    @Id @ManyToOne @JoinColumn public var
             language: Language? = null
 
     var dummy: String? = null

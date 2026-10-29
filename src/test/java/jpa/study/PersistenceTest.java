@@ -2,6 +2,7 @@ package jpa.study;
 
 import jpa.study.dao.Member;
 import org.junit.Test;
+import org.hibernate.Hibernate;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -13,6 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -43,10 +45,15 @@ public class PersistenceTest {
                         Member member = new Member();
                         member.setUsername("security-update");
                         member.setAge(11);
+                        member.setFullName("Ada Lovelace");
                         manager.persist(member);
                         manager.getTransaction().commit();
                         manager.clear();
-                        assertEquals("security-update", manager.find(Member.class, member.getId()).getUsername());
+                        Member loaded = manager.getReference(Member.class, member.getId());
+                        assertFalse(Hibernate.isInitialized(loaded));
+                        assertEquals("security-update", loaded.getUsername());
+                        assertTrue(Hibernate.isInitialized(loaded));
+                        assertEquals("Ada Lovelace", loaded.getFullName());
                     } finally {
                         manager.close();
                     }

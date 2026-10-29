@@ -6,16 +6,16 @@ import javax.persistence.GeneratedValue
 import javax.persistence.Id
 import javax.persistence.OneToMany
 
-Entity
+@Entity
 public class Country {
 
-    Id GeneratedValue public var
+    @Id @GeneratedValue public var
             id: Long? = null
 
     public var
             name: String? = null
 
-    OneToMany(mappedBy = "country") public var
+    @OneToMany(mappedBy = "country") public var
             countryXLanguages: MutableList<CountryXLanguage> = ArrayList<CountryXLanguage>()
 
 

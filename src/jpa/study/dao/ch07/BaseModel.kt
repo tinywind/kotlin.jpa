@@ -2,6 +2,6 @@ package jpa.study.dao.ch07
 
 import javax.persistence.*
 
-MappedSuperclass
+@MappedSuperclass
 public interface  BaseModel {
 }

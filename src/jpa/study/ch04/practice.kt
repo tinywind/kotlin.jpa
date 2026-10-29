@@ -109,12 +109,12 @@ fun mission() {
     }
 
     fun print() {
-        var requestItems = em.createQuery("SELECT m FROM RequestXProduct m", javaClass<RequestXProduct>()).getResultList()
+        var requestItems = em.createQuery("SELECT m FROM RequestXProduct m", RequestXProduct::class.java).getResultList()
 
         for (item in requestItems) {
-            var request = em.find(javaClass<Request>(), item.requestId)
-            var product = em.find(javaClass<Product>(), item.productId)
-            var member = em.find(javaClass<Member>(), request.memberId)
+            var request = em.find(Request::class.java, item.requestId)
+            var product = em.find(Product::class.java, item.productId)
+            var member = em.find(Member::class.java, request.memberId)
 
             println(member)
             println(request)

@@ -5,17 +5,17 @@ import java.io.Serializable
 import java.util.Date
 import javax.persistence.*
 
-Entity
+@Entity
 public class Object09 : TypeModel() {
     @Embedded // droppable
-    AttributeOverrides(
+    @AttributeOverrides(
             AttributeOverride(name = "city", column = Column(name = "a_city")),
             AttributeOverride(name = "street", column = Column(name = "a_street")),
             AttributeOverride(name = "zipcode", column = Column(name = "a_zipcode"))
     )
     public var value: Address? = null
 
-    AttributeOverrides(
+    @AttributeOverrides(
             // [AttributeOverride]'s name is not table column. it is class member
             AttributeOverride(name = "startedAt", column = Column(name = "started_at_a")),
             AttributeOverride(name = "endedAt", column = Column(name = "ended_at_a"))
@@ -36,15 +36,15 @@ public class Object09 : TypeModel() {
     }
 }
 
-Embeddable
+@Embeddable
 public class CustomType09 : Serializable { // Serializable for primary key
     public var
             startedAt: Date? = Date()
-    public Temporal(TemporalType.TIMESTAMP) Column(name = "ended_at") var
+    public @Temporal(TemporalType.TIMESTAMP) @Column(name = "ended_at") final var
             endedAt: Date? = Date()
             /* prohibit external modifying: because of safety value referencing */
         private set(other: Date?) {
-            $endedAt = other
+            field = other
         }
 
     override fun equals(other: Any?): Boolean {
@@ -65,7 +65,7 @@ public class CustomType09 : Serializable { // Serializable for primary key
     }
 }
 
-Embeddable
+@Embeddable
 public class Address {
 
     public var city: String? = null
