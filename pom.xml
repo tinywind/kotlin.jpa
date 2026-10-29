@@ -11,8 +11,10 @@
     <name>kotlin.jpa.test</name>
 
     <properties>
-        <postgresql.version>9.4-1200-jdbc41</postgresql.version>
+        <postgresql.version>42.7.14</postgresql.version>
         <jooq.version>3.5.1</jooq.version>
+        <kotlin.version>0.12.1230</kotlin.version>
+        <flyway.version>13.11.1</flyway.version>
         <jdbc.url>postgresql://localhost/jpa</jdbc.url>
         <jdbc.user>postgres</jdbc.user>
         <jdbc.password>1234</jdbc.password>
@@ -22,7 +24,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
-            <version>4.3.10.Final</version>
+            <version>5.6.15.Final</version>
         </dependency>
 
         <dependency>
@@ -30,10 +32,27 @@
             <artifactId>postgresql</artifactId>
             <version>${postgresql.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-runtime</artifactId>
+            <version>${kotlin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-reflect</artifactId>
+            <version>${kotlin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
         <finalName>kotlin.jpa.test</finalName>
+        <sourceDirectory>src/jpa</sourceDirectory>
 
         <resources>
             <resource>
@@ -54,9 +73,31 @@
 
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.5.1</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-maven-plugin</artifactId>
+                <version>${kotlin.version}</version>
+                <executions>
+                    <execution>
+                        <id>compile-kotlin</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
-                <version>3.0</version>
+                <version>${flyway.version}</version>
                 <configuration>
                     <url>jdbc:${jdbc.url}</url>
                     <user>${jdbc.user}</user>
@@ -67,6 +108,11 @@
                     </locations>
                 </configuration>
                 <dependencies>
+                    <dependency>
+                        <groupId>org.flywaydb</groupId>
+                        <artifactId>flyway-database-postgresql</artifactId>
+                        <version>${flyway.version}</version>
+                    </dependency>
                     <dependency>
                         <groupId>org.postgresql</groupId>
                         <artifactId>postgresql</artifactId>
@@ -82,13 +128,13 @@
                     <execution>
                         <phase>generate-sources</phase>
                         <configuration>
-                            <tasks>
+                            <target>
                                 <!--<copy dir="${project.basedir}/META-INF" todir="${project.basedir}/target/classes/META-INF"/>-->
                                 <!--<delete><fileset dir="${basedir}/webapps/WEB-INF/lib" /></delete>-->
                                 <!--<exec executable="my1.sh">-->
                                 <!--<arg value="${project.basedir}"/>-->
                                 <!--</exec>-->
-                            </tasks>
+                            </target>
                         </configuration>
                         <goals>
                             <goal>run</goal>
@@ -100,7 +146,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
-                <version>2.6</version>
+                <version>3.5.0</version>
                 <executions>
                     <execution>
                         <id>copy-resources</id>
